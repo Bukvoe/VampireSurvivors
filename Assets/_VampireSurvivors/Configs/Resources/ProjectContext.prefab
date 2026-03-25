@@ -74,3 +74,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da1f1666f79531499bb10f7b2039a80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_VampireSurvivors.CodeBase.Infrastructure.ProjectInstaller
+  _networkRunnerPrefab: {fileID: 1319657336397700976, guid: 48c340ee71b33f04a882999612f98369, type: 3}
