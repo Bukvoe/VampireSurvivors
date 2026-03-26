@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 343188735}
   - component: {fileID: 343188734}
+  - component: {fileID: 343188736}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -149,7 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zenject::Zenject.SceneContext
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 343188736}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -182,6 +184,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &343188736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343188733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bca0440426246b188528307c3c77d3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_VampireSurvivors.CodeBase.Installers.MainMenuInstaller
+  _mainMenuViewPrefab: {fileID: 6526237574320080385}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,7 +423,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4753426049663868732, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
       propertyPath: m_Name
-      value: MainMenu
+      value: MainMenuView
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350845726893904419, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350845726893904419, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350845726893904419, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350845726893904419, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350845726893904419, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6943400436642817061, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
       propertyPath: m_Pivot.x
@@ -490,11 +525,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7405703551244188716, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7405703551244188716, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7405703551244188716, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7405703551244188716, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7405703551244188716, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
+--- !u!114 &6526237574320080385 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2325880253395489999, guid: 30ee3ec245c5f864c91b95c709ace81d, type: 3}
+  m_PrefabInstance: {fileID: 6526237574320080384}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3795ac80232458c9ad87d50677a2d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_VampireSurvivors.CodeBase.UI.MainMenu.MainMenuView
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

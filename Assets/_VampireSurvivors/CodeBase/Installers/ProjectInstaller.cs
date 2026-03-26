@@ -1,3 +1,4 @@
+using _VampireSurvivors.CodeBase.EntryPoints;
 using _VampireSurvivors.CodeBase.Services.Network;
 using _VampireSurvivors.CodeBase.Services.SceneLoad;
 using Fusion;
@@ -5,7 +6,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-namespace _VampireSurvivors.CodeBase.Infrastructure
+namespace _VampireSurvivors.CodeBase.Installers
 {
     public class ProjectInstaller : MonoInstaller
     {

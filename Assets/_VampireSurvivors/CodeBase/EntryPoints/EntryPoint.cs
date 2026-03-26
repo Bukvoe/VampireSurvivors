@@ -2,7 +2,7 @@
 using Cysharp.Threading.Tasks;
 using Zenject;
 
-namespace _VampireSurvivors.CodeBase.Infrastructure
+namespace _VampireSurvivors.CodeBase.EntryPoints
 {
     public class EntryPoint : IInitializable
     {
