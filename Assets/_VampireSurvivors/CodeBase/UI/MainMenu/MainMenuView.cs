@@ -28,5 +28,12 @@ namespace _VampireSurvivors.CodeBase.UI.MainMenu
         {
             _hostButton.onClick.RemoveAllListeners();
         }
+
+        public void SetInteractable(bool interactable)
+        {
+            _hostButton.interactable = interactable;
+            _joinButton.interactable = interactable;
+            _roomInputField.interactable = interactable;
+        }
     }
 }
