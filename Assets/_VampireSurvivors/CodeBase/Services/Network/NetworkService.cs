@@ -14,23 +14,26 @@ namespace _VampireSurvivors.CodeBase.Services.Network
             _networkRunner = networkRunner;
         }
 
-        public async UniTask<HostResult> HostAsync()
+        public async UniTask<ConnectResult> CreateSessionAsync()
         {
-            var startGameResult = await _networkRunner.StartGame(new StartGameArgs
+            var result = await _networkRunner.StartGame(new StartGameArgs
             {
                 GameMode = GameMode.Host,
                 IsOpen = true,
                 IsVisible = true,
             });
 
-            if (startGameResult.Ok)
+            if (result.Ok)
             {
-                return new HostResult(startGameResult.Ok, string.Empty);
+                return new ConnectResult(result.Ok, string.Empty);
             }
 
-            var errorMessage = $"{startGameResult.ShutdownReason}{Environment.NewLine}{startGameResult.ErrorMessage}";
+            var errorMessage = $"{result.ShutdownReason}{Environment.NewLine}{result.ErrorMessage}";
 
-            return new HostResult(false, errorMessage);
+            return new ConnectResult(false, errorMessage);
+        }
+
+            return new ConnectResult(false, errorMessage);
         }
     }
 }

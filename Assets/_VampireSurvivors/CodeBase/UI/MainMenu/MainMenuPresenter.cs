@@ -32,7 +32,7 @@ namespace _VampireSurvivors.CodeBase.UI.MainMenu
         {
             _view.SetInteractable(false);
 
-            var result = await _networkService.HostAsync();
+            var result = await _networkService.CreateSessionAsync();
 
             if (!result.Success)
             {
