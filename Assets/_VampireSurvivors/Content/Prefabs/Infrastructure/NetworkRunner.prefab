@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2793693512519052333}
   - component: {fileID: 1319657336397700976}
   - component: {fileID: 502416908230657778}
+  - component: {fileID: -1337759980367534162}
   m_Layer: 0
   m_Name: NetworkRunner
   m_TagString: Untagged
@@ -114,3 +115,16 @@ MonoBehaviour:
   OnObjectExitAOI:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-1337759980367534162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2972751787546683987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e6a9e17917f4c8182baa662e0ad6e0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_VampireSurvivors.CodeBase.Common.Test
+  _networkRunner: {fileID: 1319657336397700976}

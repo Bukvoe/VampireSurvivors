@@ -54,10 +54,7 @@ namespace _VampireSurvivors.CodeBase.UI.MainMenu
             {
                 Debug.LogError(result.ErrorMessage);
                 _view.SetInteractable(true);
-                return;
             }
-
-            await _sceneLoadService.LoadSceneAsync(SceneName.GAMEPLAY);
         }
 
         private void OnQuitRequested()

@@ -14,19 +14,14 @@ namespace _VampireSurvivors.CodeBase.Installers
 
         public override void InstallBindings()
         {
-            BindPrefabs();
             BindServices();
 
             Container.BindInterfacesTo<EntryPoint>().AsSingle();
         }
 
-        private void BindPrefabs()
-        {
-            Container.Bind<NetworkRunner>().FromComponentInNewPrefab(_networkRunnerPrefab).AsSingle().NonLazy();
-        }
-
         private void BindServices()
         {
+            Container.Bind<NetworkRunnerProvider>().AsSingle().WithArguments(_networkRunnerPrefab);
             Container.Bind<INetworkService>().To<NetworkService>().AsSingle();
             Container.Bind<ISceneLoadService>().To<SceneLoadService>().AsSingle();
         }
