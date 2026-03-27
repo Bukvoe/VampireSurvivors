@@ -1,7 +1,8 @@
-﻿using System;
+﻿using _VampireSurvivors.CodeBase.Common.Extensions;
 using _VampireSurvivors.CodeBase.Services.Network.Dto;
 using Cysharp.Threading.Tasks;
 using Fusion;
+using UnityEngine;
 
 namespace _VampireSurvivors.CodeBase.Services.Network
 {
@@ -23,17 +24,23 @@ namespace _VampireSurvivors.CodeBase.Services.Network
                 IsVisible = true,
             });
 
-            if (result.Ok)
+            return result.Ok
+                ? new ConnectResult(result.Ok, string.Empty)
+                : new ConnectResult(false, result.ToErrorMessage());
+        }
+
+        public async UniTask<ConnectResult> ConnectAsync(string sessionName)
+        {
+            var result = await _networkRunner.StartGame(new StartGameArgs
             {
-                return new ConnectResult(result.Ok, string.Empty);
-            }
+                GameMode = GameMode.Client,
+                SessionName = sessionName,
+            });
 
-            var errorMessage = $"{result.ShutdownReason}{Environment.NewLine}{result.ErrorMessage}";
-
-            return new ConnectResult(false, errorMessage);
+            return result.Ok
+                ? new ConnectResult(true, string.Empty)
+                : new ConnectResult(false, result.ToErrorMessage());
         }
 
-            return new ConnectResult(false, errorMessage);
-        }
     }
 }

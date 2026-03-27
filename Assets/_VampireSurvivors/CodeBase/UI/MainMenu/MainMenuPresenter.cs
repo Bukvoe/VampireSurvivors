@@ -24,7 +24,7 @@ namespace _VampireSurvivors.CodeBase.UI.MainMenu
             _sceneLoadService = sceneLoadService;
 
             _view.HostRequested.Subscribe(_ => OnHostRequestedAsync().Forget()).AddTo(_disposable);
-            _view.JoinRequested.Subscribe(_ => OnJoinRequested()).AddTo(_disposable);
+            _view.JoinRequested.Subscribe(_ => OnJoinRequestedAsync().Forget()).AddTo(_disposable);
             _view.QuitRequested.Subscribe(_ => OnQuitRequested()).AddTo(_disposable);
         }
 
@@ -44,9 +44,20 @@ namespace _VampireSurvivors.CodeBase.UI.MainMenu
             await _sceneLoadService.LoadSceneAsync(SceneName.GAMEPLAY);
         }
 
-        private void OnJoinRequested()
+        private async UniTask OnJoinRequestedAsync()
         {
-            Debug.Log(nameof(OnJoinRequested));
+            _view.SetInteractable(false);
+
+            var result = await _networkService.ConnectAsync(_view.SessionName);
+
+            if (!result.Success)
+            {
+                Debug.LogError(result.ErrorMessage);
+                _view.SetInteractable(true);
+                return;
+            }
+
+            await _sceneLoadService.LoadSceneAsync(SceneName.GAMEPLAY);
         }
 
         private void OnQuitRequested()

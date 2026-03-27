@@ -6,5 +6,7 @@ namespace _VampireSurvivors.CodeBase.Services.Network
     public interface INetworkService
     {
         public UniTask<ConnectResult> CreateSessionAsync();
+
+        public UniTask<ConnectResult> ConnectAsync(string sessionName);
     }
 }

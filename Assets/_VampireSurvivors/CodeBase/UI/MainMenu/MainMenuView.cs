@@ -17,6 +17,8 @@ namespace _VampireSurvivors.CodeBase.UI.MainMenu
         [SerializeField, Required] private Button _joinButton;
         [SerializeField, Required] private Button _quitButton;
 
+        public string SessionName => _roomInputField.text;
+
         private void Awake()
         {
             _hostButton.onClick.AddListener(() => HostRequested.OnNext(Unit.Default));
