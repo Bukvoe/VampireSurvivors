@@ -1,0 +1,14 @@
+﻿namespace _VampireSurvivors.CodeBase.Services.Network.Dto
+{
+    public class ConnectResult
+    {
+        public readonly bool Success;
+        public readonly string ErrorMessage;
+
+        public ConnectResult(bool success, string errorMessage)
+        {
+            Success = success;
+            ErrorMessage = errorMessage;
+        }
+    }
+}
