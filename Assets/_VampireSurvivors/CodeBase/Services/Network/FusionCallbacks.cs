@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
 using R3;
-using UnityEngine;
 
 namespace _VampireSurvivors.CodeBase.Services.Network
 {
     public class FusionCallbacks : INetworkRunnerCallbacks
     {
+        public readonly Subject<PlayerRef> PlayerJoined = new();
+        public readonly Subject<PlayerRef> PlayerLeft = new();
+
         public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
         {
         }
@@ -19,10 +21,12 @@ namespace _VampireSurvivors.CodeBase.Services.Network
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
+            PlayerJoined.OnNext(player);
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {
+            PlayerLeft.OnNext(player);
         }
 
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
