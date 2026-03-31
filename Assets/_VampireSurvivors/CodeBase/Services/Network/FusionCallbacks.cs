@@ -10,6 +10,8 @@ namespace _VampireSurvivors.CodeBase.Services.Network
     {
         public readonly Subject<PlayerRef> PlayerJoined = new();
         public readonly Subject<PlayerRef> PlayerLeft = new();
+        public readonly Subject<Unit> Disconnected = new();
+        public readonly Subject<Unit> Shutdown = new();
 
         public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
         {
@@ -31,10 +33,12 @@ namespace _VampireSurvivors.CodeBase.Services.Network
 
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
         {
+            Shutdown.OnNext(Unit.Default);
         }
 
         public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
         {
+            Disconnected.OnNext(Unit.Default);
         }
 
         public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)

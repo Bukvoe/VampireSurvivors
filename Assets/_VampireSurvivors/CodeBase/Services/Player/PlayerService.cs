@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using _VampireSurvivors.CodeBase.Common;
 using _VampireSurvivors.CodeBase.Factories;
 using _VampireSurvivors.CodeBase.Services.Network;
+using _VampireSurvivors.CodeBase.Services.SceneLoad;
 using Cysharp.Threading.Tasks;
 using Fusion;
 using R3;
@@ -14,25 +16,39 @@ namespace _VampireSurvivors.CodeBase.Services.Player
         private readonly FusionCallbacks _fusionCallbacks;
         private readonly NetworkRunner _runner;
         private readonly KnightFactory _knightFactory;
+        private readonly ISceneLoadService _sceneLoadService;
         private readonly CompositeDisposable _disposables = new();
         private readonly HashSet<PlayerRef> _spawningPlayers = new();
 
-        public PlayerService(NetworkRunnerProvider runnerProvider, FusionCallbacks callbacks, KnightFactory knightFactory)
+        public PlayerService(
+            NetworkRunnerProvider runnerProvider,
+            FusionCallbacks callbacks,
+            KnightFactory knightFactory,
+            ISceneLoadService sceneLoadService)
         {
             _runner = runnerProvider.Runner;
             _fusionCallbacks = callbacks;
             _knightFactory = knightFactory;
+            _sceneLoadService = sceneLoadService;
         }
 
         public void Initialize()
         {
             _fusionCallbacks.PlayerJoined
-                            .Subscribe(OnPlayerJoined)
-                            .AddTo(_disposables);
+                .Subscribe(OnPlayerJoined)
+                .AddTo(_disposables);
 
             _fusionCallbacks.PlayerLeft
-                            .Subscribe(OnPlayerLeft)
-                            .AddTo(_disposables);
+                .Subscribe(OnPlayerLeft)
+                .AddTo(_disposables);
+
+            _fusionCallbacks.Disconnected
+                .Subscribe(_ => LoadMainMenu())
+                .AddTo(_disposables);
+
+            _fusionCallbacks.Shutdown
+                .Subscribe(_ => LoadMainMenu())
+                .AddTo(_disposables);
 
             if (!_runner.IsServer)
             {
@@ -52,6 +68,15 @@ namespace _VampireSurvivors.CodeBase.Services.Player
 
         private void OnPlayerLeft(PlayerRef player)
         {
+            if (_runner.TryGetPlayerObject(player, out var networkObject))
+            {
+                _runner.Despawn(networkObject);
+            }
+        }
+
+        private void LoadMainMenu()
+        {
+            _sceneLoadService.LoadSceneAsync(SceneName.MENU).Forget();
         }
 
         private async UniTask SpawnPlayer(PlayerRef player)
