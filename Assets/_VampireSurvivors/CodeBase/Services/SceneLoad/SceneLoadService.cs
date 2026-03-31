@@ -19,7 +19,7 @@ namespace _VampireSurvivors.CodeBase.Services.SceneLoad
         {
             if (IsNetworkScene(sceneName))
             {
-                var runner = _runnerProvider.GetOrCreateRunner();
+                var runner = _runnerProvider.Runner;
 
                 if (runner.IsSceneAuthority)
                 {

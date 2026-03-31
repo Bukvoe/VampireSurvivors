@@ -7,38 +7,48 @@ namespace _VampireSurvivors.CodeBase.Services.Network
     public class NetworkRunnerProvider
     {
         private readonly NetworkRunner _runnerPrefab;
-        private NetworkRunner _runner;
+        private readonly FusionCallbacks _fusionCallbacks;
 
-        public NetworkRunnerProvider(NetworkRunner runnerPrefab)
+        public NetworkRunner Runner { get; private set; }
+
+        public NetworkRunnerProvider(NetworkRunner runnerPrefab, FusionCallbacks fusionCallbacks)
         {
             _runnerPrefab = runnerPrefab;
+            _fusionCallbacks = fusionCallbacks;
         }
 
-        public NetworkRunner GetOrCreateRunner()
+        public NetworkRunner CreateRunner()
         {
-            if (_runner == null)
+            if (Runner != null)
             {
-                _runner = Object.Instantiate(_runnerPrefab);
-                Object.DontDestroyOnLoad(_runner);
+                Debug.LogWarning("Runner already exists");
+                return Runner;
             }
 
-            return _runner;
+            Runner = Object.Instantiate(_runnerPrefab);
+            Object.DontDestroyOnLoad(Runner);
+
+            Runner.AddCallbacks(_fusionCallbacks);
+
+            return Runner;
         }
 
         public async UniTask ResetRunnerAsync()
         {
-            if (_runner == null)
+            if (Runner == null)
             {
                 return;
             }
 
-            if (_runner.IsRunning)
+            if (Runner.IsRunning)
             {
-                await _runner.Shutdown();
+                await Runner.Shutdown();
             }
 
-            Object.Destroy(_runner.gameObject);
-            _runner = null;
+            Runner.RemoveCallbacks(_fusionCallbacks);
+
+            Object.Destroy(Runner.gameObject);
+            Runner = null;
         }
     }
 }

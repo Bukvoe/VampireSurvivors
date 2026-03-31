@@ -21,6 +21,7 @@ namespace _VampireSurvivors.CodeBase.Installers
 
         private void BindServices()
         {
+            Container.Bind<FusionCallbacks>().AsSingle();
             Container.Bind<NetworkRunnerProvider>().AsSingle().WithArguments(_networkRunnerPrefab);
             Container.Bind<INetworkService>().To<NetworkService>().AsSingle();
             Container.Bind<ISceneLoadService>().To<SceneLoadService>().AsSingle();
