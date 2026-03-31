@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using _VampireSurvivors.CodeBase.Gameplay.Knight;
+using _VampireSurvivors.CodeBase.Factories;
 using _VampireSurvivors.CodeBase.Services.Network;
 using Cysharp.Threading.Tasks;
 using Fusion;
 using R3;
-using UnityEngine;
 using Zenject;
 
 namespace _VampireSurvivors.CodeBase.Services.Player
@@ -14,15 +13,15 @@ namespace _VampireSurvivors.CodeBase.Services.Player
     {
         private readonly FusionCallbacks _fusionCallbacks;
         private readonly NetworkRunner _runner;
-        private readonly Knight _knightPrefab;
+        private readonly KnightFactory _knightFactory;
         private readonly CompositeDisposable _disposables = new();
         private readonly HashSet<PlayerRef> _spawningPlayers = new();
 
-        public PlayerService(NetworkRunnerProvider runnerProvider, FusionCallbacks callbacks, Knight knightPrefab)
+        public PlayerService(NetworkRunnerProvider runnerProvider, FusionCallbacks callbacks, KnightFactory knightFactory)
         {
             _runner = runnerProvider.Runner;
             _fusionCallbacks = callbacks;
-            _knightPrefab = knightPrefab;
+            _knightFactory = knightFactory;
         }
 
         public void Initialize()
@@ -66,8 +65,8 @@ namespace _VampireSurvivors.CodeBase.Services.Player
             {
                 try
                 {
-                    var playerObject = await _runner.SpawnAsync(_knightPrefab, Vector3.zero, Quaternion.identity, player);
-                    _runner.SetPlayerObject(player, playerObject.GetComponent<NetworkObject>());
+                    var knight = await _knightFactory.CreateAsync();
+                    _runner.SetPlayerObject(player, knight.GetComponent<NetworkObject>());
                 }
                 finally
                 {
