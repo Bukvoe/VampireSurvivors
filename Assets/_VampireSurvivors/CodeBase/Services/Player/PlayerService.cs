@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using _VampireSurvivors.CodeBase.Gameplay.Knight;
 using _VampireSurvivors.CodeBase.Services.Network;
 using Cysharp.Threading.Tasks;
 using Fusion;
 using R3;
+using UnityEngine;
 using Zenject;
 
 namespace _VampireSurvivors.CodeBase.Services.Player
@@ -12,12 +14,15 @@ namespace _VampireSurvivors.CodeBase.Services.Player
     {
         private readonly FusionCallbacks _fusionCallbacks;
         private readonly NetworkRunner _runner;
+        private readonly Knight _knightPrefab;
         private readonly CompositeDisposable _disposables = new();
+        private readonly HashSet<PlayerRef> _spawningPlayers = new();
 
-        public PlayerService(NetworkRunnerProvider runnerProvider, FusionCallbacks callbacks)
+        public PlayerService(NetworkRunnerProvider runnerProvider, FusionCallbacks callbacks, Knight knightPrefab)
         {
             _runner = runnerProvider.Runner;
             _fusionCallbacks = callbacks;
+            _knightPrefab = knightPrefab;
         }
 
         public void Initialize()
@@ -52,7 +57,23 @@ namespace _VampireSurvivors.CodeBase.Services.Player
 
         private async UniTask SpawnPlayer(PlayerRef player)
         {
-            throw new NotImplementedException();
+            if (!_runner.IsServer)
+            {
+                return;
+            }
+
+            if (!_runner.TryGetPlayerObject(player, out _) && _spawningPlayers.Add(player))
+            {
+                try
+                {
+                    var playerObject = await _runner.SpawnAsync(_knightPrefab, Vector3.zero, Quaternion.identity, player);
+                    _runner.SetPlayerObject(player, playerObject.GetComponent<NetworkObject>());
+                }
+                finally
+                {
+                    _spawningPlayers.Remove(player);
+                }
+            }
         }
 
         public void Dispose()
