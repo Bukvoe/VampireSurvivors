@@ -54,7 +54,7 @@ namespace _VampireSurvivors.CodeBase.Services.Network
         {
             await _runnerProvider.ResetRunnerAsync();
 
-            return _runnerProvider.GetOrCreateRunner();
+            return _runnerProvider.CreateRunner();
         }
     }
 }
