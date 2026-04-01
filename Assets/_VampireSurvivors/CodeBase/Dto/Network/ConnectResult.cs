@@ -1,4 +1,4 @@
-﻿namespace _VampireSurvivors.CodeBase.Services.Network.Dto
+﻿namespace _VampireSurvivors.CodeBase.Dto.Network
 {
     public class ConnectResult
     {
