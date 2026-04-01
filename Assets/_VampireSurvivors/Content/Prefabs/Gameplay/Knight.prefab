@@ -9,12 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4635934668571803834}
-  - component: {fileID: 2021803222428315786}
   - component: {fileID: 7999241050869792720}
   - component: {fileID: 8516187393446030655}
   - component: {fileID: 4353976805805799668}
   - component: {fileID: -5444317349284304754}
-  m_Layer: 0
+  - component: {fileID: 3095838346212231548}
+  - component: {fileID: 2214569415461827323}
+  m_Layer: 6
   m_Name: Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,28 +39,6 @@ Transform:
   - {fileID: 1345514939886769590}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &2021803222428315786
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2741862260075530306}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e6da30351874bf34d8b787a04fe75d0a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &7999241050869792720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,6 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64e934f48f2646039c15d7c812323704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_VampireSurvivors.CodeBase.Gamplay.Knight.Knight
+  _movement: {fileID: 3095838346212231548}
+  _view: {fileID: 2214569415461827323}
 --- !u!114 &8516187393446030655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +72,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 7999241050869792720}
   - {fileID: -5444317349284304754}
+  - {fileID: 3095838346212231548}
   ForceRemoteRenderTimeframe: 0
 --- !u!50 &4353976805805799668
 Rigidbody2D:
@@ -115,7 +97,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -142,6 +124,34 @@ MonoBehaviour:
     Position: 0.01
     Rotation: 0.01
     Scale: 0.01
+--- !u!114 &3095838346212231548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2741862260075530306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d89512f5827943df82b83fe64b1518f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_VampireSurvivors.CodeBase.Gameplay.Knight.KnightMovement
+  _maxSpeed: 9
+  _rigidbody: {fileID: 4353976805805799668}
+--- !u!114 &2214569415461827323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2741862260075530306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8887a1f690044bea06263f4e55e4ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_VampireSurvivors.CodeBase.Gameplay.Knight.KnightView
+  _spriteRenderer: {fileID: 2768451370934089435}
+  _animator: {fileID: 5961799672690389611}
 --- !u!1 &5137832657022925345
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1345514939886769590}
   - component: {fileID: 4873777867937394965}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +229,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5927302605197349924}
-  m_Layer: 0
+  - component: {fileID: 5961799672690389611}
+  m_Layer: 6
   m_Name: InterpolationTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,6 +253,28 @@ Transform:
   - {fileID: 8875260050143100641}
   m_Father: {fileID: 4635934668571803834}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &5961799672690389611
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6157002764417518419}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e6da30351874bf34d8b787a04fe75d0a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7028664475942763078
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8875260050143100641}
   - component: {fileID: 2768451370934089435}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

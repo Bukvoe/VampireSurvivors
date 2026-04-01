@@ -6419,7 +6419,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_VampireSurvivors.CodeBase.Installers.GameplayInstaller
   _knightPrefab: {fileID: 7999241050869792720, guid: 0b379139bef09d24aaa28c5cfca948ea, type: 3}
-  _joystickInputProvider: {fileID: 1624777070}
 --- !u!1001 &1001203538
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6431,6 +6430,10 @@ PrefabInstance:
     - target: {fileID: 1531213445540486, guid: e0815e227ed46e445b99930271e8942c, type: 3}
       propertyPath: m_Name
       value: Joystick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114282555968907678, guid: e0815e227ed46e445b99930271e8942c, type: 3}
+      propertyPath: deadzoneRadius
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224977699150327530, guid: e0815e227ed46e445b99930271e8942c, type: 3}
       propertyPath: m_Pivot.x
