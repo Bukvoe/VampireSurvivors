@@ -12,6 +12,8 @@ namespace _VampireSurvivors.CodeBase.Gameplay.Knight
 
         private readonly CompositeDisposable _disposable = new();
 
+        [field: SerializeField, Required] public Transform CameraTarget { get; private set; }
+
         public override void Spawned()
         {
             _movement.MoveDirection.Subscribe(_view.UpdateMovement).AddTo(_disposable);

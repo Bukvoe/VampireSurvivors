@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _VampireSurvivors.CodeBase.Factories;
+using _VampireSurvivors.CodeBase.Gameplay.Knight;
 using _VampireSurvivors.CodeBase.Services.Network;
 using Cysharp.Threading.Tasks;
 using Fusion;
@@ -9,13 +10,15 @@ using Zenject;
 
 namespace _VampireSurvivors.CodeBase.Services.Player
 {
-    public class PlayerService : IInitializable, IDisposable
+    public class PlayerService : IInitializable, ITickable, IDisposable
     {
         private readonly FusionCallbacks _fusionCallbacks;
         private readonly NetworkRunner _runner;
         private readonly KnightFactory _knightFactory;
         private readonly CompositeDisposable _disposables = new();
         private readonly HashSet<PlayerRef> _spawningPlayers = new();
+
+        public Knight LocalPlayer { get; private set; }
 
         public PlayerService(
             NetworkRunnerProvider runnerProvider,
@@ -45,6 +48,20 @@ namespace _VampireSurvivors.CodeBase.Services.Player
             foreach (var player in _runner.ActivePlayers)
             {
                 SpawnPlayer(player).Forget();
+            }
+        }
+
+        public void Tick()
+        {
+            if (LocalPlayer != null)
+            {
+                return;
+            }
+
+            if (_runner.TryGetPlayerObject(_runner.LocalPlayer, out var networkObject)
+                && networkObject.TryGetComponent<Knight>(out var knight))
+            {
+                LocalPlayer = knight;
             }
         }
 

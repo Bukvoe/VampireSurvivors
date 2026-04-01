@@ -1242,6 +1242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 478797961}
   - component: {fileID: 478797962}
+  - component: {fileID: 478797963}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1287,6 +1288,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!210 &478797963
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478797959}
+  m_Enabled: 1
+  m_SortingLayerID: -1072925759
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_SortAtRoot: 1
+  m_Sort3DAs2D: 0
 --- !u!1 &491724552
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,7 +1664,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000081a1b77f
+  m_ApplyToSortingLayers: 0000000081a1b77fc1730cc0
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -6327,8 +6341,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 2142740865
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -5045170969038034579, guid: d0998d3562bab4d45b7b75682c86c999, type: 3}
@@ -107906,6 +107920,7 @@ GameObject:
   - component: {fileID: 2809357899239596058}
   - component: {fileID: 5467565106266426505}
   - component: {fileID: 2263192288099499862}
+  - component: {fileID: 7293172806867616397}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -107913,6 +107928,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7293172806867616397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7293172806867616396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3257abfb9b0644b39f2eefb084b82b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_VampireSurvivors.CodeBase.Gameplay.Camera.PlayerFollowCamera
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
