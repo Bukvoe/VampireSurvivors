@@ -4,6 +4,7 @@ using _VampireSurvivors.CodeBase.Gameplay.Hero;
 using _VampireSurvivors.CodeBase.Services.Input;
 using _VampireSurvivors.CodeBase.Services.Input.Providers;
 using _VampireSurvivors.CodeBase.Services.Player;
+using _VampireSurvivors.CodeBase.UI.Gameplay;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -14,11 +15,13 @@ namespace _VampireSurvivors.CodeBase.Installers
     {
         [SerializeField, Required] private Hero _heroPrefab;
         [SerializeField, Required] private HeroStatsConfig _heroStatsConfig;
+        [SerializeField, Required] private StatsView _statsViewPrefab;
 
         public override void InstallBindings()
         {
             BindFactories();
             BindServices();
+            BindUI();
         }
 
         private void BindFactories()
@@ -34,6 +37,12 @@ namespace _VampireSurvivors.CodeBase.Installers
             Container.BindInterfacesAndSelfTo<PlayerInputService>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<PlayerService>().AsSingle();
+        }
+
+        private void BindUI()
+        {
+            Container.Bind<StatsView>().FromComponentInNewPrefab(_statsViewPrefab).AsSingle();
+            Container.BindInterfacesAndSelfTo<StatsPresenter>().AsSingle();
         }
     }
 }
