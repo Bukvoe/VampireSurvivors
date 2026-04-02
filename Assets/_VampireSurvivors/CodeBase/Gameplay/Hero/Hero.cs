@@ -3,19 +3,26 @@ using R3;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _VampireSurvivors.CodeBase.Gameplay.Knight
+namespace _VampireSurvivors.CodeBase.Gameplay.Hero
 {
-    public class Knight : NetworkBehaviour
+    public class Hero : NetworkBehaviour
     {
-        [SerializeField, Required] private KnightMovement _movement;
-        [SerializeField, Required] private KnightView _view;
-
         private readonly CompositeDisposable _disposable = new();
+
+        [SerializeField, Required] private HeroMovement _movement;
+        [SerializeField, Required] private HeroView _view;
+        [SerializeField, Required] private HeroStatsNetwork _statsNetwork;
 
         [field: SerializeField, Required] public Transform CameraTarget { get; private set; }
 
+        public HeroStats Stats { get; } = new();
+
         public override void Spawned()
         {
+            _statsNetwork.BindStats(Stats);
+
+            Stats.MoveSpeed.Subscribe(_movement.UpdateMaxSpeed).AddTo(_disposable);
+
             _movement.MoveDirection.Subscribe(_view.UpdateMovement).AddTo(_disposable);
         }
 

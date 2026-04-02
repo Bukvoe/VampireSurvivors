@@ -4,13 +4,13 @@ using R3;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _VampireSurvivors.CodeBase.Gameplay.Knight
+namespace _VampireSurvivors.CodeBase.Gameplay.Hero
 {
-    public class KnightMovement : NetworkBehaviour
+    public class HeroMovement : NetworkBehaviour
     {
         public readonly ReactiveProperty<Vector2> MoveDirection = new();
 
-        [SerializeField, Required] private float _maxSpeed;
+        private float _maxSpeed;
         [SerializeField, Required] private Rigidbody2D _rigidbody;
 
         [Networked, OnChangedRender(nameof(OnMoveDirectionChanged))]
@@ -29,6 +29,11 @@ namespace _VampireSurvivors.CodeBase.Gameplay.Knight
             _rigidbody.MovePosition(_rigidbody.position + deltaPosition);
 
             NetworkMoveDirection = moveNormalized;
+        }
+
+        public void UpdateMaxSpeed(float maxSpeed)
+        {
+            _maxSpeed = maxSpeed;
         }
 
         private void OnMoveDirectionChanged()

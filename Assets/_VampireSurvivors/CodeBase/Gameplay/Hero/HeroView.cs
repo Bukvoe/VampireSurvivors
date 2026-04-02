@@ -1,9 +1,9 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _VampireSurvivors.CodeBase.Gameplay.Knight
+namespace _VampireSurvivors.CodeBase.Gameplay.Hero
 {
-    public class KnightView : MonoBehaviour
+    public class HeroView : MonoBehaviour
     {
         private static readonly int IsRunning = Animator.StringToHash("IsRunning");
 
@@ -12,13 +12,14 @@ namespace _VampireSurvivors.CodeBase.Gameplay.Knight
 
         public void UpdateMovement(Vector2 moveDirection)
         {
-            var isMoving = moveDirection.sqrMagnitude > 0.0001f;
+            const float ROTATION_THRESHOLD = 0.01f;
 
-            if (isMoving)
+            if (Mathf.Abs(moveDirection.x) > ROTATION_THRESHOLD)
             {
                 _spriteRenderer.flipX = moveDirection.x < 0;
             }
 
+            var isMoving = moveDirection.sqrMagnitude > 0.0001f;
             _animator.SetBool(IsRunning, isMoving);
         }
     }

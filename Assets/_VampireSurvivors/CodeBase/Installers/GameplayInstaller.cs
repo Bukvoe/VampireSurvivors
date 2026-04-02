@@ -1,5 +1,6 @@
-﻿using _VampireSurvivors.CodeBase.Factories;
-using _VampireSurvivors.CodeBase.Gameplay.Knight;
+﻿using _VampireSurvivors.CodeBase.Config;
+using _VampireSurvivors.CodeBase.Factories;
+using _VampireSurvivors.CodeBase.Gameplay.Hero;
 using _VampireSurvivors.CodeBase.Services.Input;
 using _VampireSurvivors.CodeBase.Services.Input.Providers;
 using _VampireSurvivors.CodeBase.Services.Player;
@@ -11,7 +12,8 @@ namespace _VampireSurvivors.CodeBase.Installers
 {
     public class GameplayInstaller : MonoInstaller
     {
-        [SerializeField, Required] private Knight _knightPrefab;
+        [SerializeField, Required] private Hero _heroPrefab;
+        [SerializeField, Required] private HeroStatsConfig _heroStatsConfig;
 
         public override void InstallBindings()
         {
@@ -21,7 +23,7 @@ namespace _VampireSurvivors.CodeBase.Installers
 
         private void BindFactories()
         {
-            Container.BindInterfacesAndSelfTo<KnightFactory>().AsSingle().WithArguments(_knightPrefab);
+            Container.BindInterfacesAndSelfTo<HeroFactory>().AsSingle().WithArguments(_heroPrefab, _heroStatsConfig);
         }
 
         private void BindServices()

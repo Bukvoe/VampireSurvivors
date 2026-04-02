@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _VampireSurvivors.CodeBase.Factories;
-using _VampireSurvivors.CodeBase.Gameplay.Knight;
+using _VampireSurvivors.CodeBase.Gameplay.Hero;
 using _VampireSurvivors.CodeBase.Services.Network;
 using Cysharp.Threading.Tasks;
 using Fusion;
@@ -14,20 +14,20 @@ namespace _VampireSurvivors.CodeBase.Services.Player
     {
         private readonly FusionCallbacks _fusionCallbacks;
         private readonly NetworkRunner _runner;
-        private readonly KnightFactory _knightFactory;
+        private readonly HeroFactory _heroFactory;
         private readonly CompositeDisposable _disposables = new();
         private readonly HashSet<PlayerRef> _spawningPlayers = new();
 
-        public Knight LocalPlayer { get; private set; }
+        public Hero LocalPlayer { get; private set; }
 
         public PlayerService(
             NetworkRunnerProvider runnerProvider,
             FusionCallbacks callbacks,
-            KnightFactory knightFactory)
+            HeroFactory heroFactory)
         {
             _runner = runnerProvider.Runner;
             _fusionCallbacks = callbacks;
-            _knightFactory = knightFactory;
+            _heroFactory = heroFactory;
         }
 
         public void Initialize()
@@ -59,9 +59,9 @@ namespace _VampireSurvivors.CodeBase.Services.Player
             }
 
             if (_runner.TryGetPlayerObject(_runner.LocalPlayer, out var networkObject)
-                && networkObject.TryGetComponent<Knight>(out var knight))
+                && networkObject.TryGetComponent<Hero>(out var hero))
             {
-                LocalPlayer = knight;
+                LocalPlayer = hero;
             }
         }
 
@@ -89,8 +89,8 @@ namespace _VampireSurvivors.CodeBase.Services.Player
             {
                 try
                 {
-                    var knight = await _knightFactory.CreateAsync();
-                    var networkObject = knight.GetComponent<NetworkObject>();
+                    var hero = await _heroFactory.CreateAsync();
+                    var networkObject = hero.GetComponent<NetworkObject>();
                     networkObject.AssignInputAuthority(player);
                     _runner.SetPlayerObject(player, networkObject);
                 }
