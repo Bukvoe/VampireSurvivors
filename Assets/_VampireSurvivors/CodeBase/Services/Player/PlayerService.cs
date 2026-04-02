@@ -10,15 +10,16 @@ using Zenject;
 
 namespace _VampireSurvivors.CodeBase.Services.Player
 {
-    public class PlayerService : IInitializable, ITickable, IDisposable
+    public class PlayerService : IInitializable, IDisposable
     {
         private readonly FusionCallbacks _fusionCallbacks;
         private readonly NetworkRunner _runner;
         private readonly HeroFactory _heroFactory;
         private readonly CompositeDisposable _disposables = new();
         private readonly HashSet<PlayerRef> _spawningPlayers = new();
+        private readonly ReactiveProperty<Hero> _localPlayer = new();
 
-        public Hero LocalPlayer { get; private set; }
+        public ReadOnlyReactiveProperty<Hero> LocalPlayer => _localPlayer;
 
         public PlayerService(
             NetworkRunnerProvider runnerProvider,
@@ -40,6 +41,12 @@ namespace _VampireSurvivors.CodeBase.Services.Player
                 .Subscribe(OnPlayerLeft)
                 .AddTo(_disposables);
 
+            Observable.EveryUpdate()
+              .Select(_ => GetPlayer(_runner.LocalPlayer))
+              .DistinctUntilChanged()
+              .Subscribe(x => _localPlayer.Value = x)
+              .AddTo(_disposables);
+
             if (!_runner.IsServer)
             {
                 return;
@@ -48,20 +55,6 @@ namespace _VampireSurvivors.CodeBase.Services.Player
             foreach (var player in _runner.ActivePlayers)
             {
                 SpawnPlayer(player).Forget();
-            }
-        }
-
-        public void Tick()
-        {
-            if (LocalPlayer != null)
-            {
-                return;
-            }
-
-            if (_runner.TryGetPlayerObject(_runner.LocalPlayer, out var networkObject)
-                && networkObject.TryGetComponent<Hero>(out var hero))
-            {
-                LocalPlayer = hero;
             }
         }
 
@@ -90,15 +83,29 @@ namespace _VampireSurvivors.CodeBase.Services.Player
                 try
                 {
                     var hero = await _heroFactory.CreateAsync();
-                    var networkObject = hero.GetComponent<NetworkObject>();
-                    networkObject.AssignInputAuthority(player);
-                    _runner.SetPlayerObject(player, networkObject);
+                    hero.Object.AssignInputAuthority(player);
+                    _runner.SetPlayerObject(player, hero.Object);
                 }
                 finally
                 {
                     _spawningPlayers.Remove(player);
                 }
             }
+        }
+
+        private Hero GetPlayer(PlayerRef playerRef)
+        {
+            if (!_runner.TryGetPlayerObject(playerRef, out var networkObject))
+            {
+                return null;
+            }
+
+            if (!networkObject.TryGetComponent(out Hero hero))
+            {
+                return null;
+            }
+
+            return hero;
         }
 
         public void Dispose()
