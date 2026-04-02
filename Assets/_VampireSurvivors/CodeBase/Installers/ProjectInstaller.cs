@@ -1,4 +1,5 @@
 using _VampireSurvivors.CodeBase.EntryPoints;
+using _VampireSurvivors.CodeBase.Ineteractors;
 using _VampireSurvivors.CodeBase.Services.Network;
 using _VampireSurvivors.CodeBase.Services.SceneLoad;
 using Fusion;
@@ -16,6 +17,8 @@ namespace _VampireSurvivors.CodeBase.Installers
         {
             BindServices();
 
+            BindInteractors();
+
             Container.BindInterfacesTo<EntryPoint>().AsSingle();
         }
 
@@ -23,8 +26,13 @@ namespace _VampireSurvivors.CodeBase.Installers
         {
             Container.Bind<FusionCallbacks>().AsSingle();
             Container.Bind<NetworkRunnerProvider>().AsSingle().WithArguments(_networkRunnerPrefab);
-            Container.Bind<INetworkService>().To<NetworkService>().AsSingle();
+            Container.BindInterfacesTo<NetworkService>().AsSingle();
             Container.Bind<ISceneLoadService>().To<SceneLoadService>().AsSingle();
+        }
+
+        private void BindInteractors()
+        {
+            Container.BindInterfacesTo<HandleDisconnectInteractor>().AsSingle();
         }
     }
 }

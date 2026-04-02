@@ -10,6 +10,7 @@ namespace _VampireSurvivors.CodeBase.Services.Network
     {
         public readonly Subject<PlayerRef> PlayerJoined = new();
         public readonly Subject<PlayerRef> PlayerLeft = new();
+        public readonly Subject<NetworkInput> InputReceived = new();
         public readonly Subject<Unit> Disconnected = new();
         public readonly Subject<Unit> Shutdown = new();
 
@@ -63,6 +64,7 @@ namespace _VampireSurvivors.CodeBase.Services.Network
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
+            InputReceived.OnNext(input);
         }
 
         public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
